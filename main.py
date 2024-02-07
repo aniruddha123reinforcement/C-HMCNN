@@ -159,7 +159,8 @@ def main():
     # Given n classes, R is an (n x n) matrix where R_ij = 1 if class i is descendant of class j
     R = np.zeros(train.A.shape)
     np.fill_diagonal(R, 1)
-    g = nx.DiGraph(train.A) # train.A is the matrix where the direct connections are stored 
+    g = nx.DiGraph(train.A)# train.A is the matrix where the direct connections are stored 
+    nx.draw(g)
     for i in range(len(train.A)):
         ancestors = list(nx.descendants(g, i)) #here we need to use the function nx.descendants() because in the directed graph the edges have source from the descendant and point towards the ancestor 
         if ancestors:
