@@ -3,6 +3,8 @@ import importlib
 os.environ["DATA_FOLDER"] = "./"
 
 import argparse
+import pickle as pkl
+
 
 import time
 
@@ -160,6 +162,8 @@ def main():
     R = np.zeros(train.A.shape)
     np.fill_diagonal(R, 1)
     g = nx.DiGraph(train.A)# train.A is the matrix where the direct connections are stored
+    # save graph object to file
+    pickle.dump(g, open('filename.pkl', 'wb'))
     for i in range(len(train.A)):
         ancestors = list(nx.descendants(g, i)) #here we need to use the function nx.descendants() because in the directed graph the edges have source from the descendant and point towards the ancestor 
         if ancestors:
@@ -273,7 +277,6 @@ def main():
     f = open('results/'+dataset_name+'.csv', 'a')
     f.write(str(seed)+ ',' +str(epoch) + ',' + str(score) + '\n')
     f.close()
-    return g 
+
 if __name__ == "__main__":
-    g = main()
-    nx.draw(g)
+    main()
