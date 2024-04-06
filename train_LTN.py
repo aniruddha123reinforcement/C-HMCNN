@@ -142,7 +142,7 @@ def main():
         train.to_eval, val.to_eval, test.to_eval = torch.tensor(train.to_eval, dtype=torch.uint8), torch.tensor(val.to_eval, dtype=torch.uint8), torch.tensor(test.to_eval, dtype=torch.uint8)
     
     different_from_0 = torch.tensor(np.array((test.Y.sum(0)!=0), dtype = np.uint8), dtype=torch.uint8)
-    ## To do modify the lower code to LTN sequence define the rules etc here initially to check and then do a separate file 
+    ## To do: modify the lower code to LTN sequence define the rules etc here initially to check and then do a separate file 
     ## using LTN support 
     # Compute matrix of ancestors R
     # Given n classes, R is an (n x n) matrix where R_ij = 1 if class i is ancestor of class j
