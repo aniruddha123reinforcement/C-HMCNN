@@ -26,8 +26,8 @@ class LogitsToPredicate(torch.nn.Module):
         probs = self.sigmoid(x)
         out = torch.sum(probs * d, dim=1)
         return out
-
-    def nodes_to_one_hot(label_graph):
+        
+def nodes_to_one_hot(label_graph):
        sorted_nodes = list(nx.topological_sort(graph))
        # print(sorted_nodes)
        num_nodes = len(sorted_nodes)
@@ -48,7 +48,7 @@ class LogitsToPredicate(torch.nn.Module):
      one_hot_dict =  nodes_to_one_hot(nodes)
 
 
-    def compute_sat_normally(logits_to_predicate,
+def compute_sat_normally(logits_to_predicate,
                          prediction, labels_graph, labels_structure,nodes,one_hot_dict):
         """
         compute satagg function for rules
