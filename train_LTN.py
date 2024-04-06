@@ -31,13 +31,12 @@ def get_constr_out(x, R):
     return final_out
 
 
-class ConstrainedFFNNModel(nn.Module):
+class FFNNModel(nn.Module):
     """ C-HMCNN(h) model - during training it returns the not-constrained output that is then passed to MCLoss """
-    def __init__(self, input_dim, hidden_dim, output_dim, hyperparams, R):
+    def __init__(self, input_dim, hidden_dim, output_dim, hyperparams):
         super(ConstrainedFFNNModel, self).__init__()
         
         self.nb_layers = hyperparams['num_layers']
-        self.R = R
         
         fc = []
         for i in range(self.nb_layers):
@@ -65,10 +64,8 @@ class ConstrainedFFNNModel(nn.Module):
             else:
                 x = self.f(self.fc[i](x))
                 x = self.drop(x)
-        if self.training:
             constrained_out = x
-        else:
-            constrained_out = get_constr_out(x, self.R)
+
         return constrained_out
 
 def main():
@@ -197,7 +194,7 @@ def main():
         num_to_skip = 1 
 
     # Create the model
-    model = ConstrainedFFNNModel(input_dims[data], args.hidden_dim, output_dims[ontology][data]+num_to_skip, hyperparams, R)
+    model = FFNNModel(input_dims[data], args.hidden_dim, output_dims[ontology][data]+num_to_skip, hyperparams)
     model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay) 
     criterion = nn.BCELoss()
