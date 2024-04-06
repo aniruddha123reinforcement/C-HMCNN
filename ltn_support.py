@@ -88,6 +88,12 @@ class LogitsToPredicate(torch.nn.Module):
             for j in nodes:
                 if i != j : 
                 sat_agg_list.append(Forall(x, Not(And(logits_to_predicate(x, one_hot_dict[i]), logits_to_predicate(x, one_hot_dict[j])))))
+
+
+        sat_agg = SatAgg(
+        *sat_agg_list
+    )
+   
                 
         """    
         
